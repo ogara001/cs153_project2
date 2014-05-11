@@ -1,5 +1,5 @@
 Copying tests/userprog/read-bad-fd to scratch partition...
-qemu -hda /tmp/wqgzfEIfQF.dsk -m 4 -net none -nographic -monitor null
+qemu -hda /tmp/_ahIykf8MP.dsk -m 4 -net none -nographic -monitor null
 PiLo hda1
 Loading.........
 Kernel command line: -q -f extract run read-bad-fd
@@ -23,8 +23,8 @@ Executing 'read-bad-fd':
 (read-bad-fd) end
 read-bad-fd: exit(0)
 Execution of 'read-bad-fd' complete.
-Timer: 247 ticks
-Thread: 0 idle ticks, 247 kernel ticks, 1 user ticks
+Timer: 252 ticks
+Thread: 0 idle ticks, 251 kernel ticks, 1 user ticks
 hda2 (filesys): 63 reads, 188 writes
 hda3 (scratch): 91 reads, 2 writes
 Console: 899 characters output

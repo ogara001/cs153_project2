@@ -113,14 +113,19 @@ process_wait (tid_t child_tid)
     return 0;
     */
     
-    do{
+    while(status == THREAD_RUNNING || status == THREAD_BLOCKED || status == THREAD_READY)
+    {
         struct thread *child = find_thread(child_tid);
         if(child)
         {
-            thread_yield();
             status = child -> status;
+            thread_yield();
         }
-    }while(status == THREAD_RUNNING || status == THREAD_BLOCKED || status == THREAD_READY);
+        if(!child)
+        {
+            break;
+        }
+    }
     return status;
 /*    
     struct thread *child = find_thread(child_tid);
@@ -552,6 +557,7 @@ setup_stack (void **esp, const char* file_name, char** saveptr)
   espCount += sizeof(void*);
   memcpy(*esp, &argv[argc], sizeof(void*));
   free(argv);
+//  hex_dump(0,*esp, espCount, 1);
   return success;
 }
 

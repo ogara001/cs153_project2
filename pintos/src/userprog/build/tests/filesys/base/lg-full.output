@@ -1,5 +1,5 @@
 Copying tests/filesys/base/lg-full to scratch partition...
-qemu -hda /tmp/VFoodLS4cQ.dsk -m 4 -net none -nographic -monitor null
+qemu -hda /tmp/zS2_3zHIj_.dsk -m 4 -net none -nographic -monitor null
 PiLo hda1
 Loading.........
 Kernel command line: -q -f extract run lg-full
@@ -23,22 +23,18 @@ Executing 'lg-full':
 (lg-full) create "quux"
 (lg-full) open "quux"
 (lg-full) writing "quux"
-Page fault at 0xfffffffc: not present error reading page in kernel context.
-Interrupt 0x0e (#PF Page-Fault Exception) at eip=0xc002b906
- cr2=fffffffc error=00000000
- eax=fffffff8 ebx=00000000 ecx=00000000 edx=c010a000
- esi=c010a044 edi=0804a886 esp=c010a044 ebp=c010ad14
- cs=0008 ds=0010 es=0010 ss=0000
-Kernel PANIC at ../../userprog/exception.c:100 in kill(): Kernel bug - unexpected interrupt in kernel
-Call stack: 0xc0028569 0xc002b738 0xc002b7ea 0xc0021a74 0xc0021bab 0xc002b906 0xc002b973 0xc002bc7f 0xc0021a74 0xc0021bab 0x804a330 0x80487cf 0x80480e4 0x8048874 0x80488a0.
-The `backtrace' program can make call stacks useful.
-Read "Backtraces" in the "Debugging Tools" chapter
-of the Pintos documentation for more information.
-Timer: 412 ticks
-Thread: 0 idle ticks, 257 kernel ticks, 155 user ticks
-hda2 (filesys): 83 reads, 346 writes
+(lg-full) close "quux"
+(lg-full) open "quux" for verification
+(lg-full) verified contents of "quux"
+(lg-full) close "quux"
+(lg-full) end
+lg-full: exit(0)
+Execution of 'lg-full' complete.
+Timer: 581 ticks
+Thread: 0 idle ticks, 272 kernel ticks, 309 user ticks
+hda2 (filesys): 240 reads, 494 writes
 hda3 (scratch): 94 reads, 2 writes
-Console: 1613 characters output
+Console: 1068 characters output
 Keyboard: 0 keys pressed
-Exception: 1 page faults
+Exception: 0 page faults
 Powering off...

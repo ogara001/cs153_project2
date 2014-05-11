@@ -1,13 +1,13 @@
 Copying tests/filesys/base/syn-write to scratch partition...
 Copying tests/filesys/base/child-syn-wrt to scratch partition...
-qemu -hda /tmp/cOJqwcGJG1.dsk -m 4 -net none -nographic -monitor null
+qemu -hda /tmp/p5TvdzsvHN.dsk -m 4 -net none -nographic -monitor null
 PiLo hda1
 Loading.........
 Kernel command line: -q -f extract run syn-write
 Pintos booting with 4,096 kB RAM...
 383 pages available in kernel pool.
 383 pages available in user pool.
-Calibrating timer...  78,540,800 loops/s.
+Calibrating timer...  104,755,200 loops/s.
 hda: 5,040 sectors (2 MB), model "QM00001", serial "QEMU HARDDISK"
 hda1: 147 sectors (73 kB), Pintos OS kernel (20)
 hda2: 4,096 sectors (2 MB), Pintos file system (21)
@@ -33,5 +33,25 @@ Executing 'syn-write':
 (syn-write) exec child 8 of 10: "child-syn-wrt 7"
 (syn-write) exec child 9 of 10: "child-syn-wrt 8"
 (syn-write) exec child 10 of 10: "child-syn-wrt 9"
-
-TIMEOUT after 60 seconds of host CPU time
+child-syn-wrt: exit(0)
+child-syn-wrt: exit(1)
+child-syn-wrt: exit(2)
+child-syn-wrt: exit(3)
+child-syn-wrt: exit(4)
+child-syn-wrt: exit(5)
+child-syn-wrt: exit(6)
+child-syn-wrt: exit(7)
+child-syn-wrt: exit(8)
+child-syn-wrt: exit(9)
+(syn-write) wait for child 1 of 10 returned 1 (expected 0)
+(syn-write) wait for child 1 of 10 returned 1 (expected 0): FAILED
+syn-write: exit(1)
+Execution of 'syn-write' complete.
+Timer: 514 ticks
+Thread: 0 idle ticks, 479 kernel ticks, 35 user ticks
+hda2 (filesys): 561 reads, 428 writes
+hda3 (scratch): 198 reads, 2 writes
+Console: 1805 characters output
+Keyboard: 0 keys pressed
+Exception: 0 page faults
+Powering off...

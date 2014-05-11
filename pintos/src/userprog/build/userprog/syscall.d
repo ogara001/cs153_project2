@@ -6,4 +6,5 @@ userprog/syscall.o: ../../userprog/syscall.c ../../userprog/syscall.h \
  ../../threads/vaddr.h ../../threads/loader.h ../../devices/shutdown.h \
  ../../userprog/process.h ../../userprog/pagedir.h ../../devices/input.h \
  ../../filesys/file.h ../../filesys/off_t.h ../../filesys/filesys.h \
- ../../threads/malloc.h ../../threads/synch.h
+ ../../threads/malloc.h ../../threads/synch.h ../../lib/user/syscall.h \
+ ../../lib/string.h

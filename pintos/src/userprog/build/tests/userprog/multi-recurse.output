@@ -1,12 +1,12 @@
 Copying tests/userprog/multi-recurse to scratch partition...
-qemu -hda /tmp/hGtIUzNxHX.dsk -m 4 -net none -nographic -monitor null
+qemu -hda /tmp/D09XtdwUvs.dsk -m 4 -net none -nographic -monitor null
 PiLo hda1
 Loading.........
 Kernel command line: -q -f extract run 'multi-recurse 15'
 Pintos booting with 4,096 kB RAM...
 383 pages available in kernel pool.
 383 pages available in user pool.
-Calibrating timer...  78,540,800 loops/s.
+Calibrating timer...  104,755,200 loops/s.
 hda: 5,040 sectors (2 MB), model "QM00001", serial "QEMU HARDDISK"
 hda1: 147 sectors (73 kB), Pintos OS kernel (20)
 hda2: 4,096 sectors (2 MB), Pintos file system (21)
@@ -21,5 +21,73 @@ Erasing ustar archive...
 Executing 'multi-recurse 15':
 (multi-recurse) begin 15
 (multi-recurse) exec("multi-recurse 14")
-
-TIMEOUT after 60 seconds of host CPU time
+(multi-recurse) begin 14
+(multi-recurse) exec("multi-recurse 13")
+(multi-recurse) begin 13
+(multi-recurse) exec("multi-recurse 12")
+(multi-recurse) begin 12
+(multi-recurse) exec("multi-recurse 11")
+(multi-recurse) begin 11
+(multi-recurse) exec("multi-recurse 10")
+(multi-recurse) begin 10
+(multi-recurse) exec("multi-recurse 9")
+(multi-recurse) begin 9
+(multi-recurse) exec("multi-recurse 8")
+(multi-recurse) begin 8
+(multi-recurse) exec("multi-recurse 7")
+(multi-recurse) begin 7
+(multi-recurse) exec("multi-recurse 6")
+(multi-recurse) begin 6
+(multi-recurse) exec("multi-recurse 5")
+(multi-recurse) begin 5
+(multi-recurse) exec("multi-recurse 4")
+(multi-recurse) begin 4
+(multi-recurse) exec("multi-recurse 3")
+(multi-recurse) begin 3
+(multi-recurse) exec("multi-recurse 2")
+(multi-recurse) begin 2
+(multi-recurse) exec("multi-recurse 1")
+(multi-recurse) begin 1
+(multi-recurse) exec("multi-recurse 0")
+(multi-recurse) begin 0
+(multi-recurse) end 0
+multi-recurse: exit(0)
+(multi-recurse) wait(exec("multi-recurse")) returned 1: FAILED
+multi-recurse: exit(1)
+(multi-recurse) end 2
+multi-recurse: exit(2)
+(multi-recurse) wait(exec("multi-recurse")) returned 1: FAILED
+multi-recurse: exit(1)
+(multi-recurse) wait(exec("multi-recurse")) returned 1: FAILED
+multi-recurse: exit(1)
+(multi-recurse) wait(exec("multi-recurse")) returned 1: FAILED
+multi-recurse: exit(1)
+(multi-recurse) wait(exec("multi-recurse")) returned 1: FAILED
+multi-recurse: exit(1)
+(multi-recurse) wait(exec("multi-recurse")) returned 1: FAILED
+multi-recurse: exit(1)
+(multi-recurse) wait(exec("multi-recurse")) returned 1: FAILED
+multi-recurse: exit(1)
+(multi-recurse) wait(exec("multi-recurse")) returned 1: FAILED
+multi-recurse: exit(1)
+(multi-recurse) wait(exec("multi-recurse")) returned 1: FAILED
+multi-recurse: exit(1)
+(multi-recurse) wait(exec("multi-recurse")) returned 1: FAILED
+multi-recurse: exit(1)
+(multi-recurse) wait(exec("multi-recurse")) returned 1: FAILED
+multi-recurse: exit(1)
+(multi-recurse) wait(exec("multi-recurse")) returned 1: FAILED
+multi-recurse: exit(1)
+(multi-recurse) wait(exec("multi-recurse")) returned 1: FAILED
+multi-recurse: exit(1)
+(multi-recurse) wait(exec("multi-recurse")) returned 1: FAILED
+multi-recurse: exit(1)
+Execution of 'multi-recurse' complete.
+Timer: 307 ticks
+Thread: 0 idle ticks, 291 kernel ticks, 16 user ticks
+hda2 (filesys): 599 reads, 208 writes
+hda3 (scratch): 101 reads, 2 writes
+Console: 3149 characters output
+Keyboard: 0 keys pressed
+Exception: 0 page faults
+Powering off...

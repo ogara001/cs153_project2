@@ -1,6 +1,6 @@
 Copying tests/userprog/write-bad-ptr to scratch partition...
 Copying ../../tests/userprog/sample.txt to scratch partition...
-qemu -hda /tmp/pq9iH6WtIg.dsk -m 4 -net none -nographic -monitor null
+qemu -hda /tmp/LBMPBq3Izj.dsk -m 4 -net none -nographic -monitor null
 PiLo hda1
 Loading.........
 Kernel command line: -q -f extract run write-bad-ptr
@@ -25,9 +25,9 @@ Executing 'write-bad-ptr':
 (write-bad-ptr) open "sample.txt"
 write-bad-ptr: exit(-1)
 Execution of 'write-bad-ptr' complete.
-Timer: 251 ticks
-Thread: 0 idle ticks, 250 kernel ticks, 1 user ticks
-hda2 (filesys): 88 reads, 194 writes
+Timer: 259 ticks
+Thread: 0 idle ticks, 258 kernel ticks, 1 user ticks
+hda2 (filesys): 92 reads, 194 writes
 hda3 (scratch): 93 reads, 2 writes
 Console: 973 characters output
 Keyboard: 0 keys pressed

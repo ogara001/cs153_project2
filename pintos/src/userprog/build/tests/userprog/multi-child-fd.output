@@ -1,7 +1,7 @@
 Copying tests/userprog/multi-child-fd to scratch partition...
 Copying ../../tests/userprog/sample.txt to scratch partition...
 Copying tests/userprog/child-close to scratch partition...
-qemu -hda /tmp/0aO2hVfYeK.dsk -m 4 -net none -nographic -monitor null
+qemu -hda /tmp/QRPJcuKVG8.dsk -m 4 -net none -nographic -monitor null
 PiLo hda1
 Loading.........
 Kernel command line: -q -f extract run multi-child-fd
@@ -25,5 +25,19 @@ Erasing ustar archive...
 Executing 'multi-child-fd':
 (multi-child-fd) begin
 (multi-child-fd) open "sample.txt"
-
-TIMEOUT after 60 seconds of host CPU time
+(child-close) begin
+(child-close) end
+child-close: exit(0)
+(multi-child-fd) wait(exec()) = 1
+(multi-child-fd) verified contents of "sample.txt"
+(multi-child-fd) end
+multi-child-fd: exit(0)
+Execution of 'multi-child-fd' complete.
+Timer: 491 ticks
+Thread: 0 idle ticks, 490 kernel ticks, 2 user ticks
+hda2 (filesys): 160 reads, 396 writes
+hda3 (scratch): 193 reads, 2 writes
+Console: 1193 characters output
+Keyboard: 0 keys pressed
+Exception: 0 page faults
+Powering off...

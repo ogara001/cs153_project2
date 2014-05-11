@@ -1,13 +1,13 @@
 Copying tests/userprog/read-boundary to scratch partition...
 Copying ../../tests/userprog/sample.txt to scratch partition...
-qemu -hda /tmp/nK7lVVAqcx.dsk -m 4 -net none -nographic -monitor null
+qemu -hda /tmp/g5i3aYCgbS.dsk -m 4 -net none -nographic -monitor null
 PiLo hda1
 Loading.........
 Kernel command line: -q -f extract run read-boundary
 Pintos booting with 4,096 kB RAM...
 383 pages available in kernel pool.
 383 pages available in user pool.
-Calibrating timer...  78,540,800 loops/s.
+Calibrating timer...  104,755,200 loops/s.
 hda: 5,040 sectors (2 MB), model "QM00001", serial "QEMU HARDDISK"
 hda1: 147 sectors (73 kB), Pintos OS kernel (20)
 hda2: 4,096 sectors (2 MB), Pintos file system (21)
@@ -23,14 +23,14 @@ Erasing ustar archive...
 Executing 'read-boundary':
 (read-boundary) begin
 (read-boundary) open "sample.txt"
-(read-boundary) read() returned 134533120 instead of 239: FAILED
-read-boundary: exit(1)
+(read-boundary) end
+read-boundary: exit(0)
 Execution of 'read-boundary' complete.
-Timer: 262 ticks
-Thread: 0 idle ticks, 261 kernel ticks, 1 user ticks
-hda2 (filesys): 89 reads, 202 writes
+Timer: 273 ticks
+Thread: 0 idle ticks, 273 kernel ticks, 1 user ticks
+hda2 (filesys): 94 reads, 202 writes
 hda3 (scratch): 97 reads, 2 writes
-Console: 1036 characters output
+Console: 992 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

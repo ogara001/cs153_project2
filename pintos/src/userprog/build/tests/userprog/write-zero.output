@@ -1,6 +1,6 @@
 Copying tests/userprog/write-zero to scratch partition...
 Copying ../../tests/userprog/sample.txt to scratch partition...
-qemu -hda /tmp/iIfBz8S7aD.dsk -m 4 -net none -nographic -monitor null
+qemu -hda /tmp/hmY_XruFeH.dsk -m 4 -net none -nographic -monitor null
 PiLo hda1
 Loading.........
 Kernel command line: -q -f extract run write-zero
@@ -23,22 +23,14 @@ Erasing ustar archive...
 Executing 'write-zero':
 (write-zero) begin
 (write-zero) open "sample.txt"
-Page fault at 0xfffffffc: not present error reading page in kernel context.
-Interrupt 0x0e (#PF Page-Fault Exception) at eip=0xc002b906
- cr2=fffffffc error=00000000
- eax=fffffff8 ebx=00000000 ecx=00000000 edx=c010a000
- esi=c010a044 edi=0000001f esp=c010a044 ebp=c010ad14
- cs=0008 ds=0010 es=0010 ss=0000
-Kernel PANIC at ../../userprog/exception.c:100 in kill(): Kernel bug - unexpected interrupt in kernel
-Call stack: 0xc0028569 0xc002b738 0xc002b7ea 0xc0021a74 0xc0021bab 0xc002b906 0xc002b973 0xc002bc7f 0xc0021a74 0xc0021bab 0x804a210 0x80480ea 0x8048130 0x8048778.
-The `backtrace' program can make call stacks useful.
-Read "Backtraces" in the "Debugging Tools" chapter
-of the Pintos documentation for more information.
-Timer: 257 ticks
-Thread: 0 idle ticks, 255 kernel ticks, 2 user ticks
-hda2 (filesys): 88 reads, 194 writes
+(write-zero) end
+write-zero: exit(0)
+Execution of 'write-zero' complete.
+Timer: 261 ticks
+Thread: 0 idle ticks, 259 kernel ticks, 2 user ticks
+hda2 (filesys): 92 reads, 194 writes
 hda3 (scratch): 93 reads, 2 writes
-Console: 1618 characters output
+Console: 968 characters output
 Keyboard: 0 keys pressed
-Exception: 1 page faults
+Exception: 0 page faults
 Powering off...
