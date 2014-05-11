@@ -250,6 +250,28 @@ thread_unblock (struct thread *t)
   intr_set_level (old_level);
 }
 
+struct thread*
+find_thread(tid_t child_tid)
+{
+    struct thread* tempThread = thread_current();
+    struct list_elem *tempElem;
+    enum intr_level old_level;
+
+    old_level = intr_disable();
+
+    for(tempElem = list_begin(&all_list); tempElem != list_end(&all_list); tempElem = list_next(tempElem))
+    {
+        tempThread = list_entry(tempElem, struct thread, allelem);
+        if(tempThread -> tid == child_tid)
+        {
+            intr_set_level(old_level); 
+            return tempThread;
+        }
+    }
+    intr_set_level(old_level); 
+    return NULL;
+}
+
 /* Returns the name of the running thread. */
 const char *
 thread_name (void) 

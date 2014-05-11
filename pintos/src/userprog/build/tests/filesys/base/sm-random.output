@@ -1,0 +1,44 @@
+Copying tests/filesys/base/sm-random to scratch partition...
+qemu -hda /tmp/1NaYo8tLZk.dsk -m 4 -net none -nographic -monitor null
+PiLo hda1
+Loading.........
+Kernel command line: -q -f extract run sm-random
+Pintos booting with 4,096 kB RAM...
+383 pages available in kernel pool.
+383 pages available in user pool.
+Calibrating timer...  78,540,800 loops/s.
+hda: 5,040 sectors (2 MB), model "QM00001", serial "QEMU HARDDISK"
+hda1: 147 sectors (73 kB), Pintos OS kernel (20)
+hda2: 4,096 sectors (2 MB), Pintos file system (21)
+hda3: 97 sectors (48 kB), Pintos scratch (22)
+filesys: using hda2
+scratch: using hda3
+Formatting file system...done.
+Boot complete.
+Extracting ustar archive from scratch device into file system...
+Putting 'sm-random' into the file system...
+Erasing ustar archive...
+Executing 'sm-random':
+(sm-random) begin
+(sm-random) create "bazzle"
+(sm-random) open "bazzle"
+(sm-random) write "bazzle" in random order
+Page fault at 0xfffffffc: not present error reading page in kernel context.
+Interrupt 0x0e (#PF Page-Fault Exception) at eip=0xc002b906
+ cr2=fffffffc error=00000000
+ eax=fffffff8 ebx=00000000 ecx=00000000 edx=c010a000
+ esi=c010a044 edi=0000001a esp=c010a044 ebp=c010ad14
+ cs=0008 ds=0010 es=0010 ss=0000
+Kernel PANIC at ../../userprog/exception.c:100 in kill(): Kernel bug - unexpected interrupt in kernel
+Call stack: 0xc0028569 0xc002b738 0xc002b7ea 0xc0021a74 0xc0021bab 0xc002b906 0xc002b973 0xc002bc7f 0xc0021a74 0xc0021bab 0x804a500 0x80481c1 0x8048a44 0x8048a70.
+The `backtrace' program can make call stacks useful.
+Read "Backtraces" in the "Debugging Tools" chapter
+of the Pintos documentation for more information.
+Timer: 266 ticks
+Thread: 0 idle ticks, 256 kernel ticks, 10 user ticks
+hda2 (filesys): 85 reads, 206 writes
+hda3 (scratch): 96 reads, 2 writes
+Console: 1635 characters output
+Keyboard: 0 keys pressed
+Exception: 1 page faults
+Powering off...

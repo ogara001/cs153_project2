@@ -110,6 +110,7 @@ struct thread
  
    /* Owned by thread.c. */
    unsigned magic;                     /* Detects stack overflow. */
+   struct list file_list;
   };
 
 /* If false (default), use round-robin scheduler.
@@ -147,5 +148,7 @@ int thread_get_nice (void);
 void thread_set_nice (int);
 int thread_get_recent_cpu (void);
 int thread_get_load_avg (void);
+/*Added the following functions*/
+struct thread *find_thread(tid_t child_tid);
 
 #endif /* threads/thread.h */
