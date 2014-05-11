@@ -96,13 +96,52 @@ start_process (void *file_name_)
    This function will be implemented in problem 2-2.  For now, it
    does nothing. */
 int
-process_wait (tid_t child_tid UNUSED) 
+process_wait (tid_t child_tid) 
 {
- /*Initial Change: infinite loop - will need to provide a correct implementation*/
 
-  while(1)
-  {};
-  return -1;
+    if(child_tid > 0xffff || child_tid < 0)
+    {
+        return -1;
+    }
+    int status = 0;
+    /*
+    if(child)
+    {
+        thread_yield();
+        return child -> status;
+    }
+    return 0;
+    */
+    
+    while(status == THREAD_RUNNING || status == THREAD_BLOCKED || status == THREAD_READY)
+    {
+        struct thread *child = find_thread(child_tid);
+        if(child)
+        {
+            status = child -> status;
+            thread_yield();
+        }
+        if(!child)
+        {
+            break;
+        }
+    }
+    return status;
+/*    
+    struct thread *child = find_thread(child_tid);
+
+    while(status != THREAD_DYING)
+    {
+        child = find_thread(child_tid);
+        if(child)
+        {
+            status = child -> status;
+            thread_yield();
+            return status;
+        }
+    }
+    return status;
+    */
 }
 
 /* Free the current process's resources. */
@@ -207,6 +246,7 @@ struct Elf32_Phdr
 /*setup_stack*/
 #define WORD_SIZE 4 
 #define MAX_ARGV 128
+#define DEFAULT_ARG 2
 /* Flags for p_flags.  See [ELF3] 2-3 and 2-4. */
 #define PF_X 1          /* Executable. */
 #define PF_W 2          /* Writable. */
@@ -448,6 +488,8 @@ setup_stack (void **esp, const char* file_name, char** saveptr)
 {
   uint8_t *kpage;
   bool success = false;
+  int espCount = 0;
+//  int argv_size = DEFAULT_ARG;
 
   kpage = palloc_get_page (PAL_USER | PAL_ZERO);
   if (kpage != NULL) 
@@ -461,19 +503,29 @@ setup_stack (void **esp, const char* file_name, char** saveptr)
   
   char *token;
   char **argv = malloc(MAX_ARGV*sizeof(char*));
+  //char **argv = malloc(DEFAULT_ARG*(sizeof(char*)));
   int argc = 0, i;
 
-  /*Parse the arguments*/
+  //////Parse the arguments/
   for(token = (char*) file_name; token != NULL; token = strtok_r(NULL, " ", saveptr))
   {
     argv[argc++] = token; 
+    /*
+    if(argc >= argv_size)
+    {
+        argv_size *= 2;
+        argv = realloc(argv, argv_size*sizeof(char*));
+    }
+    */
   }
   argv[argc] = 0;
   /*Push argv[i]*/
   for(i = argc - 1; i >= 0; i--)
   {
     *esp -= strlen(argv[i]) + 1; //Move *esp
+    espCount+= strlen(argv[i]) + 1;
     memcpy(*esp, argv[i], strlen(argv[i])+1); //Copy argument onto the stack
+//    printf("\n%s\n", (char*)*esp);
     argv[i] = *esp; //Save stack pointer
   } 
   //Align to word size (4bytes)
@@ -481,26 +533,31 @@ setup_stack (void **esp, const char* file_name, char** saveptr)
   if(i)
   { 
     *esp -= i;
+    espCount+=i;
     memcpy(*esp, &argv[argc], i);
   }
   //Push argv[i] pointers
   for(i = argc; i >= 0; i--)
   {
     *esp -= sizeof(char*);
+    espCount+= sizeof(char*);
     memcpy(*esp, &argv[i], sizeof(char*));
   }
   //Push argv
   token = *esp; 
   *esp -= sizeof(char**);
+  espCount += sizeof(char**);
   memcpy(*esp, &token, sizeof(char**));
   //Push argc 
   *esp -= sizeof(int);
+  espCount += sizeof(int);
   memcpy(*esp, &argc, sizeof(void *));
   //Push fake return addr
   *esp -= sizeof(void *);
+  espCount += sizeof(void*);
   memcpy(*esp, &argv[argc], sizeof(void*));
-  hex_dump(0,thread_current()->stack, sizeof(thread_current()->stack), true);
   free(argv);
+//  hex_dump(0,*esp, espCount, 1);
   return success;
 }
 
