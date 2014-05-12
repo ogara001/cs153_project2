@@ -29,7 +29,7 @@ struct file_cabinet{
     struct list_elem elem;
 };
 
-//void close(int fd);
+//New helper functions declared
 static void syscall_handler (struct intr_frame *);
 void close_file(int fd);
 void check_valid_ptr(const void * vaddr);
@@ -76,7 +76,7 @@ syscall_init(void)
 
 void check_valid_ptr(const void *vaddr)
 {
-    if(!is_user_vaddr(vaddr) || vaddr < (void *) 0x08048000 /*USER_VADDR_BOTTOM*/)
+    if(!is_user_vaddr(vaddr) || vaddr < (void *) 0x08048000)
     {
         exit(-1);
     }

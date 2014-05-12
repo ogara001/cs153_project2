@@ -1,0 +1,248 @@
+S 153         |
+			| PROJECT 2: USER PROGRAMS |
+			| 	   DESIGN DOCUMENT     |
+			+--------------------------+
+
+---- GROUP ----
+
+>> Fill in the names and email addresses of your group members.
+
+David Castillo <dcast030@ucr.edu>
+Odalys Garau <ogara001@ucr.edu>
+
+---- PRELIMINARIES ----
+
+>> If you have any preliminary comments on your submission, notes for the
+>> TAs, or extra credit, please give them here.
+
+>> Please cite any offline or online sources you consulted while
+>> preparing your submission, other than the Pintos documentation, course
+>> text, lecture notes, and course staff.
+
+resources: 
+http://www.ndsl.kaist.edu/~kyoungsoo/ee311/precept/week4_PJ2_updated.pdf
+http://en.wikipedia.org/wiki/File_descriptor
+wikipedia in general
+
+			   ARGUMENT PASSING
+			   ================
+
+---- DATA STRUCTURES ----
+
+>> A1: Copy here the declaration of each new or changed `struct' or
+>> `struct' member, global or static variable, `typedef', or
+>> enumeration.  Identify the purpose of each in 25 words or less.
+
+changed in:
+struct thread
+{
+	//Added the following members
+	struct list file_list;//Holds a list of the files used by the thread
+	struct list cp_list;//Holds a list of the threads childredn
+	int fd;//File descriptor for the thread
+}
+
+struct child_process
+{
+	tid_t child_tid;//Holds the childs tid
+	int status;//Holds the childs status
+	bool waited_on;//Tells if the child has been previously waited on or not
+	struct list_elem cpelem;//Used for accessing the cp_list in struct thread*
+}
+
+---- ALGORITHMS ----
+
+>> A2: Briefly describe how you implemented argument parsing.  How do
+>> you arrange for the elements of argv[] to be in the right order?
+>> How do you avoid overflowing the stack page?
+
+First we use strtok_r() to parse thhe argument and stick it onto argv[]. After all
+the arguments have been put on argv[], we put a '0' in last spot to signal the end
+of the stack. After that, we start from the end of argv[] and move the stack pointer
+down the appropriate amount by using strlen() on the argument. After all the arguments
+have been put onto the stack, we add padding if necessary then some fake addresses.
+
+---- RATIONALE ----
+
+>> A3: Why does Pintos implement strtok_r() but not strtok()?
+
+strtok uses global variables to keep track of its position, so 
+it cannot be used for multiple threads. strtok_r() is a reentrant
+version of strtok and uses a pointer to keep track of its position
+
+>> A4: In Pintos, the kernel separates commands into a executable name
+>> and arguments.  In Unix-like systems, the shell does this
+>> separation.  Identify at least two advantages of the Unix approach.
+
+By using the Unix approach, it makes less work for the kernel. Also, the by 
+using a shell, the kernel can be protected from erroneous commands from the
+user.
+
+
+			     SYSTEM CALLS
+			     ============
+
+---- DATA STRUCTURES ----
+
+>> B1: Copy here the declaration of each new or changed `struct' or
+>> `struct' member, global or static variable, `typedef', or
+>> enumeration.  Identify the purpose of each in 25 words or less.
+
+struct lock filesys_lock;//Used to provide locks when accessing the file system
+struct file_cabinet
+{
+	struct file* file;//
+	int fd;//File descriptor of the file
+	struct list_elem elem;//Used to access the file_cabinet struct
+}
+
+>> B2: Describe how file descriptors are associated with open files.
+>> Are file descriptors unique within the entire OS or just within a
+>> single process?
+
+File descriptors help to determine what the open file is used for. If 
+FD is 0, then it is for input, 1 is for output and 2 means error. Each 
+process has its own File Descriptor table.
+
+---- ALGORITHMS ----
+
+>> B3: Describe your code for reading and writing user data from the
+>> kernel.
+
+First we validate the pointers and buffers, then we do direct access.
+
+By making sure the pointers and buffers are valid, we don't have to worry 
+about doing direct acces.
+
+>> B4: Suppose a system call causes a full page (4,096 bytes) of data
+>> to be copied from user space into the kernel.  What is the least
+>> and the greatest possible number of inspections of the page table
+>> (e.g. calls to pagedir_get_page()) that might result?  What about
+>> for a system call that only copies 2 bytes of data?  Is there room
+>> for improvement in these numbers, and how much?
+
+There will be at least 1 call and at most 4096. If all the data is stored
+on a single page, then memcpy would get the pointer returned by pagedir_get_page()
+
+If the data is in byte sized segments throughout the page, then memcpy would get
+pointers to each of those segments for a total of 4096.
+
+I do not think there is room for improvement.
+
+>> B5: Briefly describe your implementation of the "wait" system call
+>> and how it interacts with process termination.
+
+First we check to make sure that we get a valid TID, then we use a helper
+function to find the thread with the given TID and then we go into
+a loop and stay there while the threads status is valid and not
+THREAD_DYING. Inside this loop, we return the status and use thread_yield()
+so the thread gives up its resources. Also, if the thread is a child and
+has already been waited on, we return -1 to indicate an error. Once the 
+threads status is THREAD_DYING, we leave the loop and return its status.
+
+>> B6: Any access to user program memory at a user-specified address
+>> can fail due to a bad pointer value.  Such accesses must cause the
+>> process to be terminated.  System calls are fraught with such
+>> accesses, e.g. a "write" system call requires reading the system
+>> call number from the user stack, then each of the call's three
+>> arguments, then an arbitrary amount of user memory, and any of
+>> these can fail at any point.  This poses a design and
+>> error-handling problem: how do you best avoid obscuring the primary
+>> function of code in a morass of error-handling?  Furthermore, when
+>> an error is detected, how do you ensure that all temporarily
+>> allocated resources (locks, buffers, etc.) are freed?  In a few
+>> paragraphs, describe the strategy or strategies you adopted for
+>> managing these issues.  Give an example.
+
+You don't. We were unable to deal with this issue. To prevent users from
+accessing memory they aren't supposed to, we did a validate pointer function.
+This ensured that memory that wasn't the users wasn't accessed.
+
+
+---- SYNCHRONIZATION ----
+
+>> B7: The "exec" system call returns -1 if loading the new executable
+>> fails, so it cannot return before the new executable has completed
+>> loading.  How does your code ensure this?  How is the load
+>> success/failure status passed back to the thread that calls "exec"?
+
+We could not get the exec to work without error. When we tried adding
+children to the program, exec didn't work properly anymore.
+
+>> B8: Consider parent process P with child process C.  How do you
+>> ensure proper synchronization and avoid race conditions when P
+>> calls wait(C) before C exits?  After C exits?  How do you ensure
+>> that all resources are freed in each case?  How about when P
+>> terminates without waiting, before C exits?  After C exits?  Are
+>> there any special cases?
+
+This was a case we had a lot of trouble with and were unable to come
+up with a solution for. wait(C) was actually being called before C
+came into existence. 
+
+---- RATIONALE ----
+
+>> B9: Why did you choose to implement access to user memory from the
+>> kernel in the way that you did?
+
+We verify that memory access occurs in a location allotted to the user program
+in order to protect the kernel. We check that the memory access is a valid virtual 
+address using the function in threads/vaddr.h and also by checking that it doesn't 
+exceeed the space each user program is given in virtual memory.
+
+
+>> B10: What advantages or disadvantages can you see to your design
+>> for file descriptors?
+
+>> B11: The default tid_t to pid_t mapping is the identity mapping.
+>> If you changed it, what advantages are there to your approach?
+
+We did not change it
+
+			   SURVEY QUESTIONS
+			   ================
+
+Answering these questions is optional, but it will help us improve the
+course in future quarters.  Feel free to tell us anything you
+want--these questions are just to spur your thoughts.  You may also
+choose to respond anonymously in the course evaluations at the end of
+the quarter.
+
+>> In your opinion, was this assignment, or any one of the three problems
+>> in it, too easy or too hard?  Did it take too long or too little time?
+
+All of the problems were extremely difficult. We were given very little
+direction on how to approach the problems. Even the documentation we were
+given was not helpful, and in some cases misleading. Just getting started 
+was a monumental task and took over a full day of reading and trying to 
+understand what was said. The work put into this project was more than
+a 4-unit class should be giving
+
+>> Did you find that working on a particular part of the assignment gave
+>> you greater insight into some aspect of OS design?
+
+I learned a lot of OS design, like how threads interact with each other
+and how important certain aspects of the kernel are. If we had been given 
+more structure about implementing this part of the project, I think my 
+understanding of OS design would be more complete.
+
+>> Is there some particular fact or hint we should give students in
+>> future quarters to help them solve the problems?  Conversely, did you
+>> find any of our guidance to be misleading?
+
+During lab or lecture, it would be helpful to be given a starting point
+and maybe a general over view of what to do to get started. Like, maybe 
+what functions we will need to do in order to tell if we have things working.
+Also, explaing the filesystem and how to use hex_dump() to tell if argument
+passing is working would be nice rather than just saying, here's hex dump, 
+use it.
+
+>> Do you have any suggestions for the TAs to more effectively assist
+>> students, either for future quarters or the remaining projects?
+
+Giving us examples or exerpt of the TA's code isn't as useful as giving 
+us pseudocode or an explanation of how to go about implementing certain 
+functions. It's hard to look at some code on the board and understand 
+what it is doing. 
+
+>> Any other comments?
