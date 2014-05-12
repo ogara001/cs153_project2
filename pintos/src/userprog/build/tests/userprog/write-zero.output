@@ -1,6 +1,6 @@
 Copying tests/userprog/write-zero to scratch partition...
 Copying ../../tests/userprog/sample.txt to scratch partition...
-qemu -hda /tmp/hmY_XruFeH.dsk -m 4 -net none -nographic -monitor null
+qemu -hda /tmp/zd4cUbV3t7.dsk -m 4 -net none -nographic -monitor null
 PiLo hda1
 Loading.........
 Kernel command line: -q -f extract run write-zero
@@ -27,7 +27,7 @@ Executing 'write-zero':
 write-zero: exit(0)
 Execution of 'write-zero' complete.
 Timer: 261 ticks
-Thread: 0 idle ticks, 259 kernel ticks, 2 user ticks
+Thread: 0 idle ticks, 260 kernel ticks, 1 user ticks
 hda2 (filesys): 92 reads, 194 writes
 hda3 (scratch): 93 reads, 2 writes
 Console: 968 characters output

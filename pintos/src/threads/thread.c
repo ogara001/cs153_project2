@@ -11,6 +11,7 @@
 #include "threads/switch.h"
 #include "threads/synch.h"
 #include "threads/vaddr.h"
+#include "threads/malloc.h"
 #ifdef USERPROG
 #include "userprog/process.h"
 #endif
@@ -70,6 +71,9 @@ static void *alloc_frame (struct thread *, size_t size);
 static void schedule (void);
 void thread_schedule_tail (struct thread *prev);
 static tid_t allocate_tid (void);
+void add_cp(tid_t child_tid);
+int remove_cp(tid_t child_tid);
+struct child_process *get_child(tid_t child_tid);
 
 /* Initializes the threading system by transforming the code
    that's currently running into a thread.  This can't work in
@@ -248,6 +252,50 @@ thread_unblock (struct thread *t)
   list_push_back (&ready_list, &t->elem);
   t->status = THREAD_READY;
   intr_set_level (old_level);
+}
+
+void
+add_cp(tid_t child_tid)
+{
+    struct thread *parent = thread_current();
+    struct child_process *child = malloc(sizeof(struct child_process*));
+    child -> child_tid = child_tid;
+    child -> waited_on = false;
+    list_push_back(&parent->cp_list, &child->cpelem);
+}
+
+int
+remove_cp(tid_t child_tid)
+{
+    struct thread *parent = thread_current();
+    struct child_process *child = get_child(child_tid);
+    if(!child || !parent)
+    {
+        return -1;
+    }
+    list_remove(&child->cpelem);
+    return 0;
+
+}
+
+struct child_process*
+get_child(tid_t child_tid)
+{
+    struct thread* parent = thread_current();
+    struct list_elem *tempElem;
+    enum intr_level old_level;
+    old_level = intr_disable();
+    for(tempElem = list_begin(&parent->cp_list); tempElem != list_end(&parent->cp_list); tempElem = list_next(tempElem))
+    {
+        struct child_process *tempChild = list_entry(tempElem, struct child_process, cpelem);
+        if(tempChild -> child_tid == child_tid)
+        {
+            intr_set_level(old_level); 
+            return tempChild;
+        }
+    }
+    intr_set_level(old_level); 
+    return NULL;
 }
 
 struct thread*
@@ -495,6 +543,7 @@ init_thread (struct thread *t, const char *name, int priority)
 
   list_init(&t -> file_list);
   t->fd = 2;
+  t-> cp = NULL;
 }
 
 /* Allocates a SIZE-byte frame at the top of thread T's stack and

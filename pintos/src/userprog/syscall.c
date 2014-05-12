@@ -113,7 +113,7 @@ int user_to_kernel_ptr(const void *vaddr)
 
 pid_t exec(const char* cmd_line)
 {
-    pid_t tmp = process_execute(cmd_line);
+    tid_t tmp = process_execute(cmd_line);
     char *saveptr;
     char *temp1 = strtok_r((char *)cmd_line, " ", &saveptr);
     int exist = open(temp1);
@@ -126,6 +126,7 @@ pid_t exec(const char* cmd_line)
     {
         return tmp;
     }
+//    add_cp(tmp);
     return tmp;
 }
 

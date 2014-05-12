@@ -1,5 +1,5 @@
 Copying tests/filesys/base/sm-full to scratch partition...
-qemu -hda /tmp/_uYLr7ukN7.dsk -m 4 -net none -nographic -monitor null
+qemu -hda /tmp/5AKweWagdT.dsk -m 4 -net none -nographic -monitor null
 PiLo hda1
 Loading.........
 Kernel command line: -q -f extract run sm-full
@@ -31,7 +31,7 @@ Executing 'sm-full':
 sm-full: exit(0)
 Execution of 'sm-full' complete.
 Timer: 291 ticks
-Thread: 0 idle ticks, 258 kernel ticks, 33 user ticks
+Thread: 0 idle ticks, 260 kernel ticks, 31 user ticks
 hda2 (filesys): 104 reads, 222 writes
 hda3 (scratch): 94 reads, 2 writes
 Console: 1067 characters output

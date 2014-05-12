@@ -1,6 +1,6 @@
 Copying tests/userprog/rox-child to scratch partition...
 Copying tests/userprog/child-rox to scratch partition...
-qemu -hda /tmp/Tjbp7j9BIb.dsk -m 4 -net none -nographic -monitor null
+qemu -hda /tmp/lGii9Mq3VF.dsk -m 4 -net none -nographic -monitor null
 PiLo hda1
 Loading.........
 Kernel command line: -q -f extract run rox-child
@@ -33,8 +33,8 @@ child-rox: exit(1)
 (rox-child) wait for child: FAILED
 rox-child: exit(1)
 Execution of 'rox-child' complete.
-Timer: 481 ticks
-Thread: 0 idle ticks, 475 kernel ticks, 6 user ticks
+Timer: 480 ticks
+Thread: 0 idle ticks, 476 kernel ticks, 4 user ticks
 hda2 (filesys): 134 reads, 396 writes
 hda3 (scratch): 193 reads, 2 writes
 Console: 1189 characters output

@@ -1,6 +1,6 @@
 Copying tests/userprog/wait-twice to scratch partition...
 Copying tests/userprog/child-simple to scratch partition...
-qemu -hda /tmp/jrMHTGsAll.dsk -m 4 -net none -nographic -monitor null
+qemu -hda /tmp/Js60AC3W7K.dsk -m 4 -net none -nographic -monitor null
 PiLo hda1
 Loading.........
 Kernel command line: -q -f extract run wait-twice
@@ -24,7 +24,7 @@ Executing 'wait-twice':
 (wait-twice) begin
 (child-simple) run
 child-simple: exit(81)
-(wait-twice) wait(exec()) = 1
+(wait-twice) wait(exec()) = 0
 (wait-twice) wait(exec()) = 0
 (wait-twice) end
 wait-twice: exit(0)
