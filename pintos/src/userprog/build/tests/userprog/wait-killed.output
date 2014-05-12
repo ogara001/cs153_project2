@@ -1,6 +1,6 @@
 Copying tests/userprog/wait-killed to scratch partition...
 Copying tests/userprog/child-bad to scratch partition...
-qemu -hda /tmp/AGsd8xJ66c.dsk -m 4 -net none -nographic -monitor null
+qemu -hda /tmp/snXru0pGmA.dsk -m 4 -net none -nographic -monitor null
 PiLo hda1
 Loading.........
 Kernel command line: -q -f extract run wait-killed
@@ -34,8 +34,8 @@ Call stack: 0xc0028669 0xc002b84f 0xc002b901 0xc0021b74 0xc0021cab 0xc002beef 0x
 The `backtrace' program can make call stacks useful.
 Read "Backtraces" in the "Debugging Tools" chapter
 of the Pintos documentation for more information.
-Timer: 447 ticks
-Thread: 0 idle ticks, 444 kernel ticks, 3 user ticks
+Timer: 455 ticks
+Thread: 0 idle ticks, 453 kernel ticks, 2 user ticks
 hda2 (filesys): 127 reads, 370 writes
 hda3 (scratch): 181 reads, 2 writes
 Console: 1579 characters output

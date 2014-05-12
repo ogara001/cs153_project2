@@ -1,5 +1,5 @@
 Copying tests/filesys/base/sm-full to scratch partition...
-qemu -hda /tmp/5AKweWagdT.dsk -m 4 -net none -nographic -monitor null
+qemu -hda /tmp/OzzzqbqSmH.dsk -m 4 -net none -nographic -monitor null
 PiLo hda1
 Loading.........
 Kernel command line: -q -f extract run sm-full

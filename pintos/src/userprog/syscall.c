@@ -23,7 +23,7 @@
 
 struct lock filesys_lock;
 
-struct process_file{
+struct file_cabinet{
     struct file *file;
     int fd;
     struct list_elem elem;
@@ -35,22 +35,15 @@ void close_file(int fd);
 void check_valid_ptr(const void * vaddr);
 void check_valid_buffer(void *buffer, unsigned size);
 int user_to_kernel_ptr(const void *vaddr);
-//int write(int fd, const void *buffer, unsigned size);
 void syscall_init(void);
 void get_arg(struct intr_frame *f UNUSED, int *arg, int n);
 struct file *process_get_file(int fd);
-//int wait(tid_ pid);
-//bool create(const char *file, unsigned initial_size);
-//bool remove(const char *file);
-//int filesize(int fd);
-//int open (const char *file);
 int process_add_file(struct file *f);
-//tid_t exec(const char* cmd_line);
 
 
 int process_add_file(struct file *f)
 {
-    struct process_file *tempPf = malloc(sizeof(struct process_file));
+    struct file_cabinet *tempPf = malloc(sizeof(struct file_cabinet));
     tempPf -> file = f;
     tempPf -> fd = thread_current() -> fd;
     thread_current() -> fd++;
@@ -65,7 +58,7 @@ struct file *process_get_file(int fd)
 
     for(tempElem = list_begin(&tempThread -> file_list); tempElem != list_end(&tempThread -> file_list); tempElem = list_next(tempElem))
     {
-        struct process_file *pf = list_entry(tempElem, struct process_file, elem);
+        struct file_cabinet *pf = list_entry(tempElem, struct file_cabinet, elem);
         if(fd == pf -> fd)
         {
             return pf -> file;
@@ -223,7 +216,7 @@ void close_file(int fd)
     while( !list_empty (&tempThread -> file_list) && tempElem != list_end(&tempThread -> file_list))
     {
         nextElem = list_next(tempElem);
-        struct process_file *pf = list_entry(tempElem, struct process_file, elem);
+        struct file_cabinet *pf = list_entry(tempElem, struct file_cabinet, elem);
         if(fd == pf -> fd || fd == -1)
         {
             file_close(pf -> file);
@@ -320,11 +313,6 @@ int open (const char *file)
     int fd = process_add_file(tempFile);
     lock_release(&filesys_lock);
     return fd;
-    /*
-    file_open(tempFile -> inode);
-    lock_release(&filesys_lock);
-    return fd;
-    */
 }
 
 static void

@@ -8,7 +8,7 @@ In kernel.o:
 0xc002b901: page_fault (.../userprog/exception.c:165)
 0xc0021b74: intr_handler (..../threads/interrupt.c:367)
 0xc0021cab: intr_entry (threads/intr-stubs.S:38)
-0xc002beef: syscall_handler (...../userprog/syscall.c:337)
+0xc002beef: syscall_handler (...../userprog/syscall.c:325)
 0xc0021b74: intr_handler (..../threads/interrupt.c:367)
 0xc0021cab: intr_entry (threads/intr-stubs.S:38)
 In tests/userprog/wait-killed:
