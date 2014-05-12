@@ -1,6 +1,6 @@
 Copying tests/userprog/wait-killed to scratch partition...
 Copying tests/userprog/child-bad to scratch partition...
-qemu -hda /tmp/meLyuWJzUD.dsk -m 4 -net none -nographic -monitor null
+qemu -hda /tmp/snXru0pGmA.dsk -m 4 -net none -nographic -monitor null
 PiLo hda1
 Loading.........
 Kernel command line: -q -f extract run wait-killed
@@ -24,18 +24,18 @@ Executing 'wait-killed':
 (wait-killed) begin
 (child-bad) begin
 Page fault at 0x20101234: not present error reading page in kernel context.
-Interrupt 0x0e (#PF Page-Fault Exception) at eip=0xc002bddf
+Interrupt 0x0e (#PF Page-Fault Exception) at eip=0xc002beef
  cr2=20101234 error=00000000
  eax=20101234 ebx=c010efb0 ecx=0804c02e edx=00000030
  esi=00000000 edi=00000000 esp=20101234 ebp=c010ef64
  cs=0008 ds=0010 es=0010 ss=ac20
 Kernel PANIC at ../../userprog/exception.c:105 in kill(): Kernel bug - unexpected interrupt in kernel
-Call stack: 0xc0028579 0xc002b73f 0xc002b7f1 0xc0021a84 0xc0021bbb 0xc002bddf 0xc0021a84 0xc0021bbb 0x80480ad 0x80480ec 0x8048728.
+Call stack: 0xc0028669 0xc002b84f 0xc002b901 0xc0021b74 0xc0021cab 0xc002beef 0xc0021b74 0xc0021cab 0x80480ad 0x80480ec 0x8048728.
 The `backtrace' program can make call stacks useful.
 Read "Backtraces" in the "Debugging Tools" chapter
 of the Pintos documentation for more information.
-Timer: 456 ticks
-Thread: 0 idle ticks, 453 kernel ticks, 3 user ticks
+Timer: 455 ticks
+Thread: 0 idle ticks, 453 kernel ticks, 2 user ticks
 hda2 (filesys): 127 reads, 370 writes
 hda3 (scratch): 181 reads, 2 writes
 Console: 1579 characters output

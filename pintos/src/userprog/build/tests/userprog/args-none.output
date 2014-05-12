@@ -1,12 +1,12 @@
 Copying tests/userprog/args-none to scratch partition...
-qemu -hda /tmp/NWkDfhvhQ1.dsk -m 4 -net none -nographic -monitor null
+qemu -hda /tmp/2IJ9FaZn9A.dsk -m 4 -net none -nographic -monitor null
 PiLo hda1
 Loading.........
 Kernel command line: -q -f extract run args-none
 Pintos booting with 4,096 kB RAM...
 383 pages available in kernel pool.
 383 pages available in user pool.
-Calibrating timer...  104,755,200 loops/s.
+Calibrating timer...  52,377,600 loops/s.
 hda: 5,040 sectors (2 MB), model "QM00001", serial "QEMU HARDDISK"
 hda1: 147 sectors (73 kB), Pintos OS kernel (20)
 hda2: 4,096 sectors (2 MB), Pintos file system (21)
@@ -19,18 +19,16 @@ Extracting ustar archive from scratch device into file system...
 Putting 'args-none' into the file system...
 Erasing ustar archive...
 Executing 'args-none':
-(args) begin
-(args) argc = 1
-(args) argv[0] = 'args-none'
-(args) argv[1] = null
-(args) end
-args-none: exit(0)
-Execution of 'args-none' complete.
-Timer: 247 ticks
-Thread: 0 idle ticks, 246 kernel ticks, 1 user ticks
+Kernel PANIC at ../../userprog/syscall.c:321 in syscall_handler(): assertion `false' failed.
+Call stack: 0xc0028669 0xc002be0d 0xc0021b74 0xc0021cab 0x804a1f0 0x8048285 0x80482ce 0x80480c8 0x8048758.
+The `backtrace' program can make call stacks useful.
+Read "Backtraces" in the "Debugging Tools" chapter
+of the Pintos documentation for more information.
+Timer: 248 ticks
+Thread: 0 idle ticks, 248 kernel ticks, 0 user ticks
 hda2 (filesys): 63 reads, 186 writes
 hda3 (scratch): 90 reads, 2 writes
-Console: 942 characters output
+Console: 1150 characters output
 Keyboard: 0 keys pressed
 Exception: 0 page faults
 Powering off...

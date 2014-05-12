@@ -98,50 +98,35 @@ start_process (void *file_name_)
 int
 process_wait (tid_t child_tid) 
 {
-
+    //Magic numbers, yay!
     if(child_tid > 0xffff || child_tid < 0)
     {
         return -1;
     }
     int status = 0;
-    /*
-    if(child)
-    {
-        thread_yield();
-        return child -> status;
-    }
-    return 0;
-    */
-    
+
     while(status == THREAD_RUNNING || status == THREAD_BLOCKED || status == THREAD_READY)
     {
-        struct thread *child = find_thread(child_tid);
-        if(child)
+        struct thread *t = find_thread(child_tid);
+        if(t && t -> cp != NULL && t -> cp -> waited_on)
         {
-            status = child -> status;
+            return -1;
+        }
+        if(t)
+        {
+            if(t -> cp != NULL)
+            {
+                t -> cp -> waited_on = true;
+                status = t -> status;
+            }
             thread_yield();
         }
-        if(!child)
+        if(!t)
         {
             break;
         }
     }
     return status;
-/*    
-    struct thread *child = find_thread(child_tid);
-
-    while(status != THREAD_DYING)
-    {
-        child = find_thread(child_tid);
-        if(child)
-        {
-            status = child -> status;
-            thread_yield();
-            return status;
-        }
-    }
-    return status;
-    */
 }
 
 /* Free the current process's resources. */
