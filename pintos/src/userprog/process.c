@@ -495,13 +495,6 @@ setup_stack (void **esp, const char* file_name, char** saveptr)
   for(token = (char*) file_name; token != NULL; token = strtok_r(NULL, " ", saveptr))
   {
     argv[argc++] = token; 
-    /*
-    if(argc >= argv_size)
-    {
-        argv_size *= 2;
-        argv = realloc(argv, argv_size*sizeof(char*));
-    }
-    */
   }
   argv[argc] = 0;
   /*Push argv[i]*/

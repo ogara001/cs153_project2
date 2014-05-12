@@ -1,5 +1,5 @@
 Copying tests/userprog/write-stdin to scratch partition...
-qemu -hda /tmp/2Ea8dzfYdU.dsk -m 4 -net none -nographic -monitor null
+qemu -hda /tmp/4SvbY__Yae.dsk -m 4 -net none -nographic -monitor null
 PiLo hda1
 Loading.........
 Kernel command line: -q -f extract run write-stdin
@@ -23,8 +23,8 @@ Executing 'write-stdin':
 (write-stdin) end
 write-stdin: exit(0)
 Execution of 'write-stdin' complete.
-Timer: 263 ticks
-Thread: 0 idle ticks, 263 kernel ticks, 0 user ticks
+Timer: 266 ticks
+Thread: 0 idle ticks, 265 kernel ticks, 1 user ticks
 hda2 (filesys): 61 reads, 188 writes
 hda3 (scratch): 91 reads, 2 writes
 Console: 899 characters output

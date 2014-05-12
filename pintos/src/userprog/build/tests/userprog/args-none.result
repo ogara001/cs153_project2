@@ -1,18 +1,1 @@
-FAIL
-Kernel panic in run: PANIC at ../../userprog/syscall.c:321 in syscall_handler(): assertion `false' failed.
-Call stack: 0xc0028669 0xc002be0d 0xc0021b74 0xc0021cab 0x804a1f0 0x8048285 0x80482ce 0x80480c8 0x8048758
-Translation of call stack:
-In kernel.o:
-0xc0028669: debug_panic (.../../lib/kernel/debug.c:38)
-0xc002be0d: process_add_file (.../../userprog/syscall.c:45)
-0xc0021b74: intr_handler (..../threads/interrupt.c:367)
-0xc0021cab: intr_entry (threads/intr-stubs.S:38)
-In tests/userprog/args-none:
-0x0804a1f0: write (...../lib/user/syscall.c:123)
-0x08048285: vmsg (...uild/../../tests/lib.c:25)
-0x080482ce: msg (...uild/../../tests/lib.c:37)
-0x080480c8: main (.../tests/userprog/args.c:16)
-0x08048758: _start (.../../../lib/user/entry.c:9)
-Translations of user virtual addresses above are based on a guess at
-the binary to use.  If this guess is incorrect, then those
-translations will be misleading.
+PASS
