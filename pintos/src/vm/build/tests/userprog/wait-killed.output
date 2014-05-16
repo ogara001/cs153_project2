@@ -1,0 +1,47 @@
+Copying tests/userprog/wait-killed to scratch partition...
+Copying tests/userprog/child-bad to scratch partition...
+qemu -hda /tmp/jDCFom0zjw.dsk -m 4 -net none -nographic -monitor null
+PiLo hda1
+Loading.........
+Kernel command line: -q -f extract run wait-killed
+Pintos booting with 4,096 kB RAM...
+383 pages available in kernel pool.
+383 pages available in user pool.
+Calibrating timer...  104,755,200 loops/s.
+hda: 13,104 sectors (6 MB), model "QM00001", serial "QEMU HARDDISK"
+hda1: 147 sectors (73 kB), Pintos OS kernel (20)
+hda2: 4,096 sectors (2 MB), Pintos file system (21)
+hda3: 181 sectors (90 kB), Pintos scratch (22)
+hda4: 8,192 sectors (4 MB), Pintos swap (23)
+filesys: using hda2
+scratch: using hda3
+swap: using hda4
+Formatting file system...done.
+Boot complete.
+Extracting ustar archive from scratch device into file system...
+Putting 'wait-killed' into the file system...
+Putting 'child-bad' into the file system...
+Erasing ustar archive...
+Executing 'wait-killed':
+(wait-killed) begin
+(child-bad) begin
+Page fault at 0x20101234: not present error reading page in kernel context.
+Interrupt 0x0e (#PF Page-Fault Exception) at eip=0xc002bf1f
+ cr2=20101234 error=00000000
+ eax=20101234 ebx=c010efb0 ecx=0804c02e edx=00000030
+ esi=00000000 edi=00000000 esp=20101234 ebp=c010ef64
+ cs=0008 ds=0010 es=0010 ss=ac20
+Kernel PANIC at ../../userprog/exception.c:105 in kill(): Kernel bug - unexpected interrupt in kernel
+Call stack: 0xc0028699 0xc002b87f 0xc002b931 0xc0021ba4 0xc0021cdb 0xc002bf1f 0xc0021ba4 0xc0021cdb 0x80480ad 0x80480ec 0x8048728.
+The `backtrace' program can make call stacks useful.
+Read "Backtraces" in the "Debugging Tools" chapter
+of the Pintos documentation for more information.
+Timer: 431 ticks
+Thread: 0 idle ticks, 429 kernel ticks, 2 user ticks
+hda2 (filesys): 127 reads, 368 writes
+hda3 (scratch): 180 reads, 2 writes
+hda4 (swap): 0 reads, 0 writes
+Console: 1673 characters output
+Keyboard: 0 keys pressed
+Exception: 1 page faults
+Powering off...

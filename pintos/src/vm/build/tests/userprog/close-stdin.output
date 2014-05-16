@@ -1,0 +1,36 @@
+Copying tests/userprog/close-stdin to scratch partition...
+qemu -hda /tmp/D3_oVpB3sn.dsk -m 4 -net none -nographic -monitor null
+PiLo hda1
+Loading.........
+Kernel command line: -q -f extract run close-stdin
+Pintos booting with 4,096 kB RAM...
+383 pages available in kernel pool.
+383 pages available in user pool.
+Calibrating timer...  105,062,400 loops/s.
+hda: 13,104 sectors (6 MB), model "QM00001", serial "QEMU HARDDISK"
+hda1: 147 sectors (73 kB), Pintos OS kernel (20)
+hda2: 4,096 sectors (2 MB), Pintos file system (21)
+hda3: 91 sectors (45 kB), Pintos scratch (22)
+hda4: 8,192 sectors (4 MB), Pintos swap (23)
+filesys: using hda2
+scratch: using hda3
+swap: using hda4
+Formatting file system...done.
+Boot complete.
+Extracting ustar archive from scratch device into file system...
+Putting 'close-stdin' into the file system...
+Erasing ustar archive...
+Executing 'close-stdin':
+(close-stdin) begin
+(close-stdin) end
+close-stdin: exit(0)
+Execution of 'close-stdin' complete.
+Timer: 259 ticks
+Thread: 0 idle ticks, 259 kernel ticks, 0 user ticks
+hda2 (filesys): 61 reads, 186 writes
+hda3 (scratch): 90 reads, 2 writes
+hda4 (swap): 0 reads, 0 writes
+Console: 993 characters output
+Keyboard: 0 keys pressed
+Exception: 0 page faults
+Powering off...

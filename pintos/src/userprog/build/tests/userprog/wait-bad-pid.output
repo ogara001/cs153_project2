@@ -1,5 +1,5 @@
 Copying tests/userprog/wait-bad-pid to scratch partition...
-qemu -hda /tmp/nJZgJedqfk.dsk -m 4 -net none -nographic -monitor null
+qemu -hda /tmp/Bmll3yqb0Y.dsk -m 4 -net none -nographic -monitor null
 PiLo hda1
 Loading.........
 Kernel command line: -q -f extract run wait-bad-pid
@@ -23,8 +23,8 @@ Executing 'wait-bad-pid':
 (wait-bad-pid) end
 wait-bad-pid: exit(0)
 Execution of 'wait-bad-pid' complete.
-Timer: 281 ticks
-Thread: 0 idle ticks, 282 kernel ticks, 0 user ticks
+Timer: 247 ticks
+Thread: 0 idle ticks, 246 kernel ticks, 1 user ticks
 hda2 (filesys): 61 reads, 188 writes
 hda3 (scratch): 91 reads, 2 writes
 Console: 906 characters output
