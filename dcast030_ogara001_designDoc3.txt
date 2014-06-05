@@ -1,0 +1,174 @@
+﻿+---------------------------+
+                        |          CS 153           |
+                        | PROJECT 3: VIRTUAL MEMORY |
+                        |      DESIGN DOCUMENT      |
+                        +---------------------------+
+
+---- GROUP ----
+
+>> Fill in the names and email addresses of your group members.
+
+David Castillo dcast030@ucr.edu
+Odalys Garau ogara001@ucr.edu
+
+---- PRELIMINARIES ----
+
+>> If you have any preliminary comments on your submission, notes for the
+>> TAs, or extra credit, please give them here.
+
+>> Please cite any offline or online sources you consulted while
+>> preparing your submission, other than the Pintos documentation, course
+>> text, lecture notes, and course staff.
+
+
+Our code does not correctly implement virtual memory. We were unable to complete the project even with the information given in lab. Our answers in the design document are how we would implement the correct virtual memory concepts even though our code does not do so. 
+
+                        PAGE TABLE MANAGEMENT
+                        =====================
+
+---- DATA STRUCTURES ----
+
+>> A1: Copy here the declaration of each new or changed `struct' or
+>> `struct' member, global or static variable, `typedef', or
+>> enumeration.  Identify the purpose of each in 25 words or less.
+
+---- ALGORITHMS ----
+
+>> A2: In a few paragraphs, describe your code for locating the frame,
+>> if any, that contains the data of a given page.
+
+
+>> A3: How does your code coordinate accessed and dirty bits between
+>> kernel and user virtual addresses that alias a single frame, or
+>> alternatively how do you avoid the issue?
+
+
+We avoid the issue since user memory is only accessed using the user virtual address and not the corresponding kernel virtual address. Therefore, we would only have to update the dirty and accessed bits in the user virtual address. We don’t implement sharing so there is no other issue with updating the accessed and dirty bits. 
+
+---- SYNCHRONIZATION ----
+
+>> A4: When two user processes both need a new frame at the same time,
+>> how are races avoided?
+
+
+We would implement locks anywhere that there is information necessary to access or replace a frame. 
+
+---- RATIONALE ----
+
+>> A5: Why did you choose the data structure(s) that you did for
+>> representing virtual-to-physical mappings?
+
+
+The virtual to physical mappings would be implemented using hash tables because we can take part of the virtual address and use it as a key to index the hash table to access the information saved in the table that is needed to get to the physical address. A hash table is more efficient for inserting, deleting, and finding than any other data structure.
+
+                       PAGING TO AND FROM DISK
+                       =======================
+
+---- DATA STRUCTURES ----
+
+>> B1: Copy here the declaration of each new or changed `struct' or
+>> `struct' member, global or static variable, `typedef', or
+>> enumeration.  Identify the purpose of each in 25 words or less.
+
+---- ALGORITHMS ----
+
+>> B2: When a frame is required but none is free, some frame must be
+>> evicted.  Describe your code for choosing a frame to evict.
+
+
+Since we are using a hash table for the pages, we think it would be best to use the clock algorithm since this would not require us to implement any other data structures. We can just use an iterator that starts at the beginning of the hash table, and when it gets to the end, it just circles around to the beginning.
+
+>> B3: When a process P obtains a frame that was previously used by a
+>> process Q, how do you adjust the page table (and any other data
+>> structures) to reflect the frame Q no longer has?
+
+>> B4: Explain your heuristic for deciding whether a page fault for an
+>> invalid virtual address should cause the stack to be extended into
+>> the page that faulted.
+
+---- SYNCHRONIZATION ----
+
+>> B5: Explain the basics of your VM synchronization design.  In
+>> particular, explain how it prevents deadlock.  (Refer to the
+>> textbook for an explanation of the necessary conditions for
+>> deadlock.)
+
+Our implementation would use less locks to keep the synchronization but allow parallelism. We would place a lock on the swap table, frame table, and supplemental page table. To avoid deadlock we make sure that there is no circular dependency between any code that acquires a lock. 
+
+>> B6: A page fault in process P can cause another process Q's frame
+>> to be evicted.  How do you ensure that Q cannot access or modify
+>> the page during the eviction process?  How do you avoid a race
+>> between P evicting Q's frame and Q faulting the page back in?
+
+
+A lock would be used to protect critical parts of a processes so that Q cannot access the page during the eviction of that page thus preventing any race conditions from occurring.
+
+>> B7: Suppose a page fault in process P causes a page to be read from
+>> the file system or swap.  How do you ensure that a second process Q
+>> cannot interfere by e.g. attempting to evict the frame while it is
+>> still being read in?
+
+
+Use a semaphore or a lock to prevent any other operations on the page while it is being read from the file system or swap. This prevents eviction from the frame and provides synchronization so that features are completed correctly. 
+
+>> B8: Explain how you handle access to paged-out pages that occur
+>> during system calls.  Do you use page faults to bring in pages (as
+>> in user programs), or do you have a mechanism for "locking" frames
+>> into physical memory, or do you use some other design?  How do you
+>> gracefully handle attempted accesses to invalid virtual addresses?
+
+
+We use page fault to bring in a page because we only access user data by its user virtual address not by its kernel virtual memory. We can use the frame pointer that is passed to the system call to access the memory the same way that we did in project 2. 
+
+
+
+
+---- RATIONALE ----
+
+>> B9: A single lock for the whole VM system would make
+>> synchronization easy, but limit parallelism.  On the other hand,
+>> using many locks complicates synchronization and raises the
+>> possibility for deadlock but allows for high parallelism.  Explain
+>> where your design falls along this continuum and why you chose to
+>> design it this way.
+
+
+Our design, if implemented correctly, would use as few locks as possible to provide a middle ground for this problem. 
+
+                           SURVEY QUESTIONS
+                           ================
+
+Answering these questions is optional, but it will help us improve the
+course in future quarters.  Feel free to tell us anything you
+want--these questions are just to spur your thoughts.  You may also
+choose to respond anonymously in the course evaluations at the end of
+the quarter.
+
+>> In your opinion, was this assignment, or any one of the problems
+>> in it, too easy or too hard?  Did it take too long or too little time?
+
+
+This project was too difficult and there was not enough help provided. Even though we had ample time to work on it, we had no idea where to start. The reason we didn’t complete the project is because there was too much new code to implement and we didn’t have enough information on how to make this new code work with the previous code from project 2.
+
+>> Did you find that working on a particular part of the assignment gave
+>> you greater insight into some aspect of OS design?
+
+
+We were unable to implement many parts of the project. So no, we do not feel working on this particular assignment gave us greater insight into any aspect of OS design.
+
+>> Is there some particular fact or hint we should give students in
+>> future quarters to help them solve the problems?  Conversely, did you
+>> find any of our guidance to be misleading?
+
+
+We feel like there was not enough guidance for this particular project. We were given snippets of code, but not really any way to start the project. Even searching online did not really yield any results other than other peoples code, but we could not find anything to guide us without giving the answer, such as an explanation on where to start or what direction to go in.  
+
+>> Do you have any suggestions for the TAs to more effectively assist
+>> students in future quarters?
+
+
+The TA and professor should implement this project by themselves so they know exactly what to do if a student asks for help. Just giving us snippets of code is not helpful if the TA or professor cannot explain what that code is doing since it was written by someone else and does not contain enough comments to follow the long chain of function calls that are used in OS code. 
+
+>> Any other comments?
+
+The TA should know how this project works not just what a single correct implementation that can be found online looks like.
